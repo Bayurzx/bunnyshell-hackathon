@@ -1,0 +1,23 @@
+# Ignore general files
+LICENSE
+README.md
+yarn-error.log
+why.md
+bunnyshell
+
+# Ignore backend specific files
+backend/artifacts
+backend/cache
+backend/gas-report.txt
+
+backend/steps.md
+
+# Ignore frontend specific files
+frontend/.next
+frontend/hello.backup.txt
+
+
+
+# Ignore files in all node_modules
+**/node_modules
+

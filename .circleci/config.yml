@@ -1,0 +1,428 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.10.1
+
+parameters:
+  workflow_id:
+    type: string
+    default: ${CIRCLE_WORKFLOW_ID:0:7}
+
+commands:
+  destroy-environment:
+    description: Destroy front-end cloudformation stacks given a workflow ID.
+    parameters:
+      destroy_workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            # Your code here
+            aws s3 rm s3://onlinesafety-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            echo "Deleting the -- onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7} -- stack"
+            aws cloudformation delete-stack --stack-name onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      revert_workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          when: on_fail
+          command: |
+            cd ~/project/frontend/constants
+
+            if [ -f "constants.zip" ]; then
+                unzip -o constants.zip -d .
+                rm constants.zip
+            else
+                echo "constants.zip file not found."
+            fi
+
+jobs:
+  build-frontend:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Build front-end
+          command: |
+            cd frontend
+            yarn
+            yarn build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
+
+  build-backend:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Back-end build
+          command: |
+            cd backend
+            yarn
+
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build
+
+  test-frontend:
+    docker:
+      # Docker image here
+      - image: cimg/node:18.14
+    steps:
+      # Checkout code from git
+      - checkout
+      # Restore from cache
+      # Your job code here
+      - run:
+          name: Test Frontend
+          command: |
+            cd frontend
+            sudo apt update
+            sudo apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            yarn
+            yarn cypress install
+            yarn test
+
+
+  test-backend:
+    docker:
+      # Docker image here
+      - image: cimg/node:18.14
+    steps:
+      # Checkout code from git
+      - checkout
+      # Restore from cache
+      - restore_cache:
+          keys: [backend-build]
+      # Your job code here
+      - run:
+          name: Test Backend
+          command: |
+            cd backend
+            yarn
+            yarn test
+
+  deploy-infrastructure:
+    docker:
+      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run: yum install -y tar gzip
+
+      - run:
+          name: Ensure front-end infrastructure exist (Initial Stack)
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --tags project=OnlineSafety \
+              --stack-name "onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+
+            echo "${CIRCLE_WORKFLOW_ID:0:7} was the current stack"
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  deploy-backend:
+    docker:
+      - image: cimg/node:18.14
+    steps:
+      # Checkout code from git
+      - checkout
+
+      # # attach workspace
+      # - attach_workspace:
+      #     at: ~/
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            # your code here
+            sudo apt update ; sudo apt install libc6 groff less ; 
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ;
+            sudo ./aws/install ; aws --version
+      - run:
+          name: Install Packages and Deploy backend
+          command: |
+            # your code here
+            echo "checking constants before deploy..."
+
+            if [ -f "frontend/constants/contractAddresses.json" ]; then
+              echo "Contents of the frontend/constants/contractAddresses.json before deploy\n"
+              cat frontend/constants/contractAddresses.json
+            else
+              echo "File: frontend/constants/contractAddresses.json aint created yet"
+            fi
+
+            echo *****************************************"
+            echo "going to backend and starting deployment"
+            echo *****************************************"
+
+            cd backend
+            yarn
+            yarn deploy
+            cd ..
+
+            cat frontend/constants/contractAddresses.json
+            if [ -f "frontend/constants/contractAddresses.json" ]; then
+                echo "Contents of the frontend/constants/contractAddresses.json *after* deploy"
+                cat frontend/constants/contractAddresses.json
+                cd frontend/constants/
+                zip -r constants.zip *
+
+                echo "zipped constants successfully and ready for shipping..."
+            else
+                echo "File not found: frontend/constants/contractAddresses.json"
+            fi            
+
+      - run:
+          name: Send constants.zip files to S3
+          command: |
+            aws s3 cp frontend/constants/constants.zip s3://onlinesafety-files/constants.zip
+
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/frontend/constants/constants.zip
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  deploy-frontend:
+    docker:
+      # Docker image here that supports AWS CLI
+      - image: cimg/node:18.14
+    steps:
+      # Checkout code from git
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            # your code here
+            sudo apt update ; sudo apt install libc6 groff less ; 
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ;
+            sudo ./aws/install ; aws --version
+
+      - run:
+          name: Get constants from Backend or AWS bucket
+          command: |
+            # Your code here
+            cd frontend/constants
+            cat contractAddresses.json 
+            if [ -f "constants.zip" ]; then
+                unzip -o constants.zip -d .
+                rm constants.zip
+                cat contractAddresses.json 
+
+            elif aws s3 ls "s3://onlinesafety-files/constants.zip" | grep -q "constants.zip$"; then
+                echo "File exists in S3 bucket!"
+                aws s3 cp s3://onlinesafety-files/constants.zip .
+                unzip -o constants.zip -d .
+                rm constants.zip
+                cat contractAddresses.json 
+
+            else
+                echo "constants.zip file not found."
+                echo "FFailing Gracefully..."
+                return 1
+            fi
+
+      - run:
+          name: Deploy frontend objects (distribution on cloudfront)
+          command: |
+            # your code here
+            cd frontend
+            yarn
+            yarn build
+            yarn export
+            ls
+            aws s3 cp out s3://onlinesafety-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          revert_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  acceptance-test:
+    docker:
+      # Lightweight Docker image
+      - image: cimg/node:18.14
+    steps:
+      # Checkout code from git
+      - checkout
+
+      - run:
+          name: Frontend smoke test to check if site works
+          command: |
+            # your code here
+            expected_title="Online Safety Game"
+            url="onlinesafety-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
+            max_attempts=4
+            attempt=1
+
+            while [[ $attempt -le $max_attempts ]]; do
+                echo "Attempt $attempt:"
+                echo "Fetching title using CURL..."
+
+                # Fetch the title using curl and extract the text between <title> tags
+                title=$(curl -s "$url" -m 300 | grep -oP '(?<=<title>)[^<]+')
+
+                if [[ -n "$title" ]]; then
+                    echo "Title from CURL is: $title"
+
+                    # Compare the fetched title with the expected title
+                    if [[ "$title" == "$expected_title" ]]; then
+                        echo "Title is correct: $title"
+                        exit 0
+                    else
+                        echo "Title is not correct: $title"
+                        exit 1
+                    fi
+                else
+                    echo "CURL returned nothing. Retrying in 3 minutes..."
+                    sleep 180  # Wait for 3 minutes before retrying
+                    attempt=$((attempt + 1))
+                fi
+            done
+
+            echo "Reached maximum number of attempts. Title could not be fetched."
+            exit 1
+
+      # Here's where you will add some code to rollback on failure
+  cloudfront-update:
+    docker:
+      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            yum -y install tar gzip
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            # your code here
+            export OldWorkflowID=$(aws cloudformation list-exports \
+            --query "Exports[?Name==\`WorkflowID\`].Value" \
+            --no-paginate --output text)
+            echo $OldWorkflowID >> ~/OldWorkflowID.txt
+            cat ~/OldWorkflowID.txt
+
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name InitialStack \
+            --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:7} \
+            --tags project=OnlineSafety
+
+            echo "Old WorkflowID is $OldWorkflowID"
+            echo "New WorkflowID is ${CIRCLE_WORKFLOW_ID:0:7}"
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - OldWorkflowID.txt
+
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  cleanup:
+    docker:
+      # Docker image here
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # You need tar to attach workspace
+            yum -y install tar gzip
+
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Remove old stacks and files
+          command: |
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+
+            echo "New WorkflowID is ${CIRCLE_WORKFLOW_ID:0:7}"
+            echo Stack names: "${STACKS[@]}"  
+            echo "${CIRCLE_WORKFLOW_ID:0:7}"
+
+            for i in "${STACKS[@]}"; do
+
+              echo "On stack: $i"
+
+              if [[ "$i" != "onlinesafety-frontend-${CIRCLE_WORKFLOW_ID:0:7}" ]] && [[ "$i" =~ "onlinesafety" ]]
+              then
+                echo "   *********** Old Stack Found   *************    "
+                echo "On stack with affix: ${i: -7}"
+
+                aws s3 rm "s3://onlinesafety-${i: -7}" --recursive
+                aws s3 rm s3://onlinesafety-files/constants.zip --recursive
+
+                aws cloudformation delete-stack --stack-name "onlinesafety-frontend-${i: -7}"
+              else 
+                echo "   ***********  Old Stack NOT Found   *************    "
+              fi
+
+            done
+
+      - destroy-environment:
+          destroy_workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+workflows:
+  default:
+    jobs:
+      - build-frontend
+      - build-backend
+
+      - test-frontend:
+          requires: [build-frontend]
+
+      - test-backend:
+          requires: [build-backend]
+
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend]
+          filters:
+            branches:
+              only: [feature]
+
+      - deploy-backend:
+          requires: [test-backend, deploy-infrastructure]
+      - deploy-frontend:
+          requires: [deploy-infrastructure, deploy-backend]
+      - cloudfront-update:
+          requires: [deploy-frontend]
+      - acceptance-test:
+          requires: [deploy-backend, deploy-frontend, cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]
