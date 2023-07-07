@@ -4,10 +4,10 @@ import { Modal } from "antd";
 
 export default function GameChat({ isChat, setIsChat, questionNumber }) {
 
-    const chats = ListOfQuestions[questionNumber].chats
-    const chatPerson = ListOfQuestions[questionNumber].chatPerson
-    const chatTopic = ListOfQuestions[questionNumber].chatTopic
-    const chatFacts = ListOfQuestions[questionNumber].chatFacts
+    const chats = ListOfQuestions[questionNumber]?.chats
+    const chatPerson = ListOfQuestions[questionNumber]?.chatPerson
+    const chatTopic = ListOfQuestions[questionNumber]?.chatTopic
+    const chatFacts = ListOfQuestions[questionNumber]?.chatFacts
     const [currentChatIndex, setCurrentChatIndex] = useState(0);
 
     useEffect(() => {

@@ -33,7 +33,7 @@ const PlayerStat = () => {
                     </div>
                     <div className="pt-2 pb-2" style={{ flex: 1 }}>
                         <h2 className="mb-2 mt-2">Has Played</h2>
-                        <p className="mb-2 mt-2">{playerData?.hasPlayed}</p>
+                        <p className="ml-2 mb-2 mt-2">{playerData?.hasPlayed}</p>
                     </div>
                     <div className="pt-2 pb-2" style={{ flex: 1 }}>
                         <h2 className="mb-2 mt-2">Is Playing?</h2>

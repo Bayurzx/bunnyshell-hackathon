@@ -134,7 +134,7 @@ export const Web3Provider = ({ children }) => {
 
     async function updateUIValues() {
         const entranceFeeFromCall = (await getEntranceFee())?.toString();
-        console.log("entranceFeeFromCall", entranceFeeFromCall);
+        // console.log("entranceFeeFromCall", entranceFeeFromCall);
         const numPlayersFromCall = (await getNumberOfPlayers())?.toString();
         const roundsFromCall = (await getRounds())?.toString();
         const getLastTimeStampFromCall = (await getLastTimeStamp())?.toString();
@@ -152,20 +152,23 @@ export const Web3Provider = ({ children }) => {
         const firstFromCall = await getFirst();
         const secondFromCall = await getSecond();
         const thirdFromCall = await getThird();
-        console.log("firstFromCall",firstFromCall, "secondFromCall",secondFromCall, "thirdFromCall",thirdFromCall);
+        // console.log("firstFromCall",firstFromCall, "secondFromCall",secondFromCall, "thirdFromCall",thirdFromCall);
         const firstVal = {
             player: firstFromCall[0],
             score: +firstFromCall[1],
+            hasPlayed: +firstFromCall[3],
         }
 
         const secondVal = {
             player: secondFromCall[0],
             score: +secondFromCall[1],
+            hasPlayed: +secondFromCall[3],
         }
 
         const thirdVal = {
-            player: firstFromCall[0],
+            player: thirdFromCall[0],
             score: +thirdFromCall[1],
+            hasPlayed: +thirdFromCall[3],
         }
 
         setFirst(firstVal);
@@ -177,7 +180,7 @@ export const Web3Provider = ({ children }) => {
 
     const updateAccountValues = async () => {
         const getPlayersDataFromCall = (await getPlayersData())
-        console.log("updateAccountValues", getPlayersDataFromCall);
+        // console.log("updateAccountValues", getPlayersDataFromCall);
         const accountData = {
             score: +getPlayersDataFromCall[1],
             winnings: +getPlayersDataFromCall[2],
@@ -185,7 +188,7 @@ export const Web3Provider = ({ children }) => {
             isPlaying: getPlayersDataFromCall[4],
         }
         setPlayerData(accountData);
-        console.log("playerData", playerData);
+        // console.log("playerData", playerData);
 
     }
 
@@ -273,7 +276,7 @@ export const Web3Provider = ({ children }) => {
             setIsMovingToGame(false)
             updateUIValues();
             handleEnterGameNotification(tx);
-            console.log(playerData.isPlaying);
+            // console.log(playerData.isPlaying);
             router.push('/game');
 
             

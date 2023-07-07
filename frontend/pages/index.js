@@ -9,6 +9,8 @@ import ConnectWallet from "../components/ConnectWallet";
 
 import { useMoralis } from "react-moralis";
 import ConnectChain from "../components/ConnectChain";
+import ContactSectionOne from "../components/contact-section-one";
+import { Chart } from "../components/Chart";
 
 const supportedChains = ["31337", "11155111"] // test 31337 or remove it only sepolia is certain
 
@@ -31,7 +33,10 @@ export default function Home() {
         <>
           {
             supportedChains.includes(parseInt(chainId).toString()) ? (
-              <Lobby />
+              <>
+                <Lobby />
+                <Chart />
+              </>
             ) : (
               <ConnectChain />
             )
@@ -44,8 +49,7 @@ export default function Home() {
       )
       }
 
-
-
+      <ContactSectionOne />
       <Footer />
     </div>
   );

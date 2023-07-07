@@ -5,9 +5,9 @@ import Header2 from "./Header2";
 
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Lobby", href: "#lobby", current: false },
-  { name: "GitHub", href: "#", current: false },
+  { name: "Home", href: "#", target: "", current: true },
+  { name: "Lobby", href: "#lobby", target: "", current: false },
+  { name: "GitHub", href: "https://github.com/Bayurzx/bunnyshell-hackathon", target: "_blank", current: false },
 ];
 
 function classNames(...classes) {
@@ -51,6 +51,7 @@ export default function Header3() {
                       <a
                         key={item.name}
                         href={item.href}
+                        target={item.target}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
