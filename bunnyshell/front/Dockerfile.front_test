@@ -17,14 +17,8 @@ RUN apt-get update && \
     xauth \
     xvfb
 
-# Create a non-root user "john"
-RUN useradd -m john
-
-# Switch to non-root user
-USER john
-
 # Set the working directory
-WORKDIR /home/frontend
+WORKDIR ./frontend
 
 # Copy the project files to the container
 # note that there are some files that will be ignored in .dockerignore
