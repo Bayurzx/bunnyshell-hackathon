@@ -1,0 +1,37 @@
+# Use the base image with Node.js 18.14
+FROM cimg/node:18.14
+
+USER 0
+
+
+# Install required dependencies
+RUN apt-get update && \
+    apt-get -y install \
+    libgtk2.0-0 \
+    libgtk-3-0 \
+    libgbm-dev \
+    libnotify-dev \
+    libgconf-2-4 \
+    libnss3 \
+    libxss1 \
+    libasound2 \
+    libxtst6 \
+    xauth \
+    xvfb
+
+
+# Set the working directory
+WORKDIR ./frontend
+
+# Copy the project files to the container
+# note that there are some files that will be ignored in .dockerignore
+COPY . .
+
+# Install dependencies using Yarn
+RUN yarn
+
+# Install Cypress dependencies
+RUN yarn cypress install
+
+# Run the tests using Cypress
+CMD ["yarn", "test"]
