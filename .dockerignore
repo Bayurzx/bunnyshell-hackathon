@@ -22,3 +22,10 @@ frontend/hello.backup.txt
 # Ignore files in all node_modules
 **/node_modules
 
+
+.git
+.circleci
+LICENSE
+README.md
+docker-compose.yaml
+why.md

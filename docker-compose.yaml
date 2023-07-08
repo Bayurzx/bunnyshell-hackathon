@@ -1,17 +1,9 @@
 version: '3'
 services:
-  backend:
+  development:
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     env_file: ./backend/.env
     ports:
-      - "1337:1337"
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
       - "3000:3000"
-    depends_on:
-      - backend
