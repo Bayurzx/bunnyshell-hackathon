@@ -7,7 +7,6 @@ notes.md
 # dependencies
 /node_modules
 */**/node_modules
-*/**/out
 /.pnp
 .pnp.js
 
@@ -16,8 +15,7 @@ notes.md
 
 # next.js
 /.next/
-/out
-
+/out/
 
 # production
 /build
@@ -44,3 +42,11 @@ next-env.d.ts
 
 why.md
 steps.md
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate
+.terraform.tfstate.backup
+bunnyshell\terraform\.terraform\**\*
+bunnyshell/terraform/terraform.tfstate

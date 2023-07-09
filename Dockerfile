@@ -5,7 +5,7 @@ FROM cimg/node:18.14
 WORKDIR /app/backend
 
 # Copy the backend code to the container
-COPY ./backend /app/backend
+COPY backend /app/backend
 
 # Install backend dependencies
 RUN yarn
@@ -14,7 +14,7 @@ RUN yarn
 WORKDIR /app/frontend
 
 # Copy the frontend code to the container
-COPY ./frontend /app/frontend
+COPY frontend /app/frontend
 
 # Install frontend dependencies and build
 RUN yarn && \
