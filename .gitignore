@@ -7,6 +7,7 @@ notes.md
 # dependencies
 /node_modules
 */**/node_modules
+*/**/out
 /.pnp
 .pnp.js
 
@@ -15,7 +16,7 @@ notes.md
 
 # next.js
 /.next/
-/out/
+/out
 
 
 # production
