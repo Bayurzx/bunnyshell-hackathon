@@ -169,7 +169,7 @@ resource "aws_cloudfront_distribution" "WebpageCDN" {
 # Call the curl command to check if your website is onine
 resource "null_resource" "acceptance_test" {
   provisioner "local-exec" {
-    command = "bash ./acceptance.sh ${local.truncated_unique_id}"
+    command = "sh ./acceptance.sh ${local.truncated_unique_id}"
   }
 
   triggers = {
