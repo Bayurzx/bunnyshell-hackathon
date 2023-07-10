@@ -11,7 +11,7 @@ components:
 
     -
         kind: Terraform
-        name: Staging
+        name: staging-onlinesafety-s3-cdn
         gitRepo: 'https://github.com/Bayurzx/bunnyshell-hackathon.git'
         gitBranch: tf
         gitApplicationPath: /bunnyshell/terraform
