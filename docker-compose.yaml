@@ -4,6 +4,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    env_file: ./backend/.env
+    # env_file: ./backend/.env
     ports:
       - "3000:3000"
