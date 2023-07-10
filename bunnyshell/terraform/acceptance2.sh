@@ -1,5 +1,6 @@
 apk update
 apk add curl
+echo "$(curl --version)"
 
 expected_title="Online Safety Game"
 url="http://onlinesafety-bunnyshell-$1.s3-website-us-east-1.amazonaws.com"
