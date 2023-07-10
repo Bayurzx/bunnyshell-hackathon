@@ -1,35 +1,44 @@
 kind: Environment
 name: Staging
 type: primary
-gitRepo: 'https://github.com/Bayurzx/bunnyshell-hackathon.git'
-gitBranch: tf
-gitApplicationPath: /bunnyshell/terraform/main.tf
-runnerImage: 'hashicorp/terraform:1.5.1'
 urlHandle: kostzj
-
-deploy:
-    - 'cd bunnyshell/terraform'
-    - '/bns/helpers/terraform/get_managed_backend > zz_backend_override.tf'
-    - 'terraform init -input=false -no-color'
-    - 'terraform apply -var "ID=bunnyshell" -input=false -auto-approve -no-color'
-    - 'BNS_TF_STATE_LIST=`terraform show -json`'
-    - 'CLOUD_FRONT_DOMAIN=`terraform output --raw CloudFrontDomain`'
-    - 'CLOUD_FRONT_URL=`terraform output --raw CloudFrontURL`'
-    - 'TRUNCATED_UNIQUE_ID=`terraform output --raw truncated_unique_id`'
-    - 'ACCEPTANCE_TEST_STATUS=`terraform output --raw acceptance_test_status`'
-destroy:
-    - 'cd bunnyshell/terraform'
-    - '/bns/helpers/terraform/get_managed_backend > zz_backend_override.tf'
-    - 'terraform init -input=false -no-color'
-    - 'terraform destroy -var "ID=bunnyshell" -input=false -auto-approve -no-color'
-
-
 environmentVariables:
     AWS_ACCESS_KEY_ID: '<<BNS_SECRET>>'
     AWS_REGION: us-east-1
     AWS_SECRET_ACCESS_KEY: '<<BNS_SECRET>>'
-exportVariables:
-    - CLOUD_FRONT_DOMAIN
-    - CLOUD_FRONT_URL
-    - TRUNCATED_UNIQUE_ID
-    - ACCEPTANCE_TEST_STATUS
+
+components:
+
+    -
+        kind: Terraform
+        name: Staging
+        gitRepo: 'https://github.com/Bayurzx/bunnyshell-hackathon.git'
+        gitBranch: tf
+        gitApplicationPath: /bunnyshell/terraform
+        runnerImage: 'hashicorp/terraform:1.5.1'
+        deploy:
+            - 'cd bunnyshell/terraform'
+            - '/bns/helpers/terraform/get_managed_backend > zz_backend_override.tf'
+            - 'terraform init -input=false -no-color'
+            - 'terraform apply -var "aws_access_key_id={{ env.vars.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key={{ env.vars.AWS_SECRET_ACCESS_KEY }}" -var "ID=bunnyshell" -input=false -auto-approve -no-color'
+            - 'BNS_TF_STATE_LIST=`terraform show -json`'
+            - 'CLOUD_FRONT_DOMAIN=`terraform output --raw CloudFrontDomain`'
+            - 'CLOUD_FRONT_URL=`terraform output --raw CloudFrontURL`'
+            - 'TRUNCATED_UNIQUE_ID=`terraform output --raw truncated_unique_id`'
+            - 'ACCEPTANCE_TEST_STATUS=`terraform output --raw acceptance_test_status`'
+        destroy:
+            - 'cd bunnyshell/terraform'
+            - '/bns/helpers/terraform/get_managed_backend > zz_backend_override.tf'
+            - 'terraform init -input=false -no-color'
+            - 'terraform destroy -var "aws_access_key_id={{ env.vars.AWS_ACCESS_KEY_ID }}" -var "aws_secret_access_key={{ env.vars.AWS_SECRET_ACCESS_KEY }}" -var "ID=bunnyshell" -input=false -auto-approve -no-color'
+
+        exportVariables:
+            - CLOUD_FRONT_DOMAIN
+            - CLOUD_FRONT_URL
+            - TRUNCATED_UNIQUE_ID
+            - ACCEPTANCE_TEST_STATUS
+volumes:
+    -
+        name: db-data
+        size: 1Gi
+        type: disk

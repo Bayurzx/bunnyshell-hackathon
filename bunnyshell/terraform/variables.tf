@@ -21,7 +21,13 @@ variable "mime_types" {
     "json" = "application/json"
     "map"  = "application/json"
     "txt"  = "text/plain"
-
-
   }
+}
+
+variable "aws_access_key_id" {
+  type = string
+}
+
+variable "aws_secret_access_key" {
+  type = string
 }
