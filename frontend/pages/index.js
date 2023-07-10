@@ -7,6 +7,9 @@ import Intro from "../components/Intro";
 import Footer from "../components/Footer";
 import ConnectWallet from "../components/ConnectWallet";
 
+import React, { useContext } from "react";
+import Web3Context from "../context/Web3Context";
+
 import { useMoralis } from "react-moralis";
 import ConnectChain from "../components/ConnectChain";
 import ContactSectionOne from "../components/contact-section-one";
@@ -16,6 +19,14 @@ const supportedChains = ["31337", "11155111"] // test 31337 or remove it only se
 
 
 export default function Home() {
+  const {
+    first,
+    second,
+    third,
+    timeLeft,
+
+  } = useContext(Web3Context);
+
   const { isWeb3Enabled, chainId } = useMoralis();
 
   return (
@@ -35,7 +46,7 @@ export default function Home() {
             supportedChains.includes(parseInt(chainId).toString()) ? (
               <>
                 <Lobby />
-                <Chart />
+                {timeLeft && <Chart />}
               </>
             ) : (
               <ConnectChain />
