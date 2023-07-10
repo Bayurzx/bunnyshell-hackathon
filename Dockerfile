@@ -1,6 +1,7 @@
 # Use the base image with Node.js 18.14
 FROM cimg/node:18.14
 
+USER 0
 # Copy the backend code to the container
 WORKDIR /app/backend
 
