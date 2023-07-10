@@ -1,6 +1,7 @@
 # Use the base image with Node.js 18.14
 FROM cimg/node:18.14
 
+USER 0
 # Set the working directory
 WORKDIR ./backend
 
