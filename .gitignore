@@ -48,5 +48,5 @@ terraform.tfstate
 terraform.tfstate.backup
 .terraform.tfstate
 .terraform.tfstate.backup
-bunnyshell\terraform\.terraform\**\*
+bunnyshell/terraform/.terraform/**/*
 bunnyshell/terraform/terraform.tfstate
