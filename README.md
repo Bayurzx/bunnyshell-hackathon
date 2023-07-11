@@ -5,7 +5,7 @@ OnlineSafetyGame In Containers
 <br>
 <br>
 On Amazon AWS
-- [OnlineSafetyGame on HTTPS](http://onlinesafety-bunnyshell-abaf933.s3-website-us-east-1.amazonaws.com/) 
+- [OnlineSafetyGame on Staging](http://onlinesafety-bunnyshell-abaf933.s3-website-us-east-1.amazonaws.com/) 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
 [![GitHub issues](https://img.shields.io/github/issues/bayurzx/bunnyshell-hackathon)](https://github.com/bayurzx/bunnyshell-hackathon/issues) 
@@ -15,43 +15,67 @@ https://github.com/Bayurzx/bunnyshell-hackathon
 
 An simple web-based quiz game that educates users about online safety and emerging technology while providing an engaging and entertaining experience.
 
+[![Video Title](https://img.youtube.com/vi/xPPbZhb1hOM/0.jpg)](https://www.youtube.com/watch?v=xPPbZhb1hOM)
+
+
 <details>
-<summary><strong style="font-size: 24px;">Inspiration</strong></summary>
-The inspiration behind our project stemmed from the need to streamline web development and staging processes for efficient project success. We were motivated by the challenges developers face when setting up testing, development, and staging environments, which often involve complex configurations and time-consuming tasks. Our goal was to simplify and automate these processes, allowing developers to focus on building and deploying their applications quickly and seamlessly.
+<summary><strong style="font-size: 30px; color: lightblue;"> Inspiration</strong></summary>
+<div style="padding-left:18px;"><code>The inspiration behind our project stemmed from the need to streamline web development and staging processes for efficient project success. We were motivated by the challenges developers face when setting up testing, development, and staging environments, which often involve complex configurations and time-consuming tasks. Our goal was to simplify and automate these processes, allowing developers to focus on building and deploying their applications quickly and seamlessly.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">What it does</strong></summary>
-Our project, powered by Bunnyshell, provides a comprehensive solution for testing, development, and staging environments. With the help of Docker and docker-compose, we created separate components for both the frontend and backend, allowing for modular and efficient development and testing. By leveraging Bunnyshell's Terraform template feature, we seamlessly deployed our environment to AWS for staging purposes. This enabled us to deploy the static site and conduct acceptance tests effortlessly.
+<summary><strong style="font-size: 30px; color: lightblue;">What it does</strong></summary>
+<div style="padding-left:18px"><code>Our project, powered by Bunnyshell, provides a comprehensive solution for testing, development, and staging environments. With the help of Docker and docker-compose, we created separate components for both the frontend and backend, allowing for modular and efficient development and testing. By leveraging Bunnyshell's Terraform template feature, we seamlessly deployed our environment to AWS for staging purposes. This enabled us to deploy the static site and conduct acceptance tests effortlessly.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">How we built it</strong></summary>
-To build our project, we utilized Docker and docker-compose to orchestrate the containers for frontend and backend development. We wrote a docker-compose.yaml file to establish the necessary connections and expose the site on HTTPS for secure access during the development phase. For staging, we took advantage of Bunnyshell's Terraform template feature, which allowed us to deploy our environment to AWS with ease. By combining these technologies and leveraging Bunnyshell's platform, we were able to create a streamlined workflow for testing, development, and staging.
+<summary><strong style="font-size: 30px; color: lightblue;">How we built it</strong></summary>
+<div style="padding-left:18px"><code>To build our project, we utilized Docker and docker-compose to orchestrate the containers for frontend and backend development. We wrote a docker-compose.yaml file to establish the necessary connections and expose the site on HTTPS for secure access during the development phase. For staging, we took advantage of Bunnyshell's Terraform template feature, which allowed us to deploy our environment to AWS with ease. By combining these technologies and leveraging Bunnyshell's platform, we were able to create a streamlined workflow for testing, development, and staging.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">Challenges we ran into</strong></summary>
-Throughout the development process, we encountered various challenges that required innovative solutions and problem-solving skills. One of the challenges was setting up the separate components for frontend and backend testing in the Docker environment. We had to carefully configure the docker-compose.yaml file to ensure the proper interaction between the components. Additionally, deploying the environment to AWS using Bunnyshell's Terraform template required thorough understanding and configuration of the template to meet our project's requirements. Overcoming these challenges involved extensive testing, troubleshooting, and collaboration.
+<summary><strong style="font-size: 30px; color: lightblue;">Challenges we ran into</strong></summary>
+<div style="padding-left:18px"><code>Throughout the development process, we encountered various challenges that required innovative solutions and problem-solving skills. One of the challenges was setting up the separate components for frontend and backend testing in the Docker environment. We had to carefully configure the docker-compose.yaml file to ensure the proper interaction between the components. Additionally, deploying the environment to AWS using Bunnyshell's Terraform template required thorough understanding and configuration of the template to meet our project's requirements. Overcoming these challenges involved extensive testing, troubleshooting, and collaboration.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">Accomplishments that we're proud of</strong></summary>
-We are proud of several accomplishments in the development of our project. Firstly, successfully creating separate components for frontend and backend testing allowed for efficient and modular development. This approach enhanced our productivity and enabled us to identify and fix issues more effectively. Additionally, deploying the environment to AWS using Bunnyshell's Terraform template was a significant achievement. It simplified the deployment process and provided us with a scalable and secure staging environment. Overall, these accomplishments contributed to a streamlined and efficient development and staging workflow.
+<summary><strong style="font-size: 30px; color: lightblue;">Accomplishments that we're proud of</strong></summary>
+<div style="padding-left:18px"><code>We are proud of several accomplishments in the development of our project. Firstly, successfully creating separate components for frontend and backend testing allowed for efficient and modular development. This approach enhanced our productivity and enabled us to identify and fix issues more effectively. Additionally, deploying the environment to AWS using Bunnyshell's Terraform template was a significant achievement. It simplified the deployment process and provided us with a scalable and secure staging environment. Overall, these accomplishments contributed to a streamlined and efficient development and staging workflow.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">What we learned</strong></summary>
-Throughout the development process, we gained valuable insights and learning experiences. We learned the importance of using Docker and docker-compose to create modular and scalable development environments. Additionally, we expanded our knowledge of Terraform and how it can simplify the deployment process, particularly when integrated with Bunnyshell's platform. We also learned the significance of effective collaboration and problem-solving in overcoming technical challenges. These learnings will undoubtedly enhance our future projects and development workflows.
+<summary><strong style="font-size: 30px; color: lightblue;">What we learned</strong></summary>
+<div style="padding-left:18px"><code>Throughout the development process, we gained valuable insights and learning experiences. We learned the importance of using Docker and docker-compose to create modular and scalable development environments. Additionally, we expanded our knowledge of Terraform and how it can simplify the deployment process, particularly when integrated with Bunnyshell's platform. We also learned the significance of effective collaboration and problem-solving in overcoming technical challenges. These learnings will undoubtedly enhance our future projects and development workflows.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">What's next for OnlineSafetyGame</strong></summary>
-Looking ahead, we have several plans to further enhance the OnlineSafetyGame project. We aim to incorporate more advanced features and functionality, such as user authentication and personalized profiles. We also plan to expand the game's content and scenarios, covering a broader range of online safety topics. Additionally, we will gather user feedback and conduct thorough testing to identify any improvements and refinements needed. Our goal is to continuously evolve and improve the OnlineSafetyGame, making it an engaging and educational platform for users to learn and practice online safety.
+<summary><strong style="font-size: 30px; color: lightblue;">What's next for OnlineSafetyGame</strong></summary>
+<div style="padding-left:18px"><code>Looking ahead, we have several plans to further enhance the OnlineSafetyGame project. We aim to incorporate more advanced features and functionality, such as user authentication and personalized profiles. We also plan to expand the game's content and scenarios, covering a broader range of online safety topics. Additionally, we will gather user feedback and conduct thorough testing to identify any improvements and refinements needed. Our goal is to continuously evolve and improve the OnlineSafetyGame, making it an engaging and educational platform for users to learn and practice online safety.</code></div>
 
 </details>
+
+---
+
 <details>
-<summary><strong style="font-size: 24px;">Technologies Used</strong></summary>
+<summary><strong style="font-size: 30px; color: lightblue;">Technologies Used</strong></summary>
 
 #### 💻 Frontend:
 
@@ -83,6 +107,9 @@ Looking ahead, we have several plans to further enhance the OnlineSafetyGame pro
 
 </details>
 
+---
+
+
 
 
 ## Branches and Environment
@@ -101,23 +128,23 @@ The `testing` branch is dedicated to testing purposes. It contains the latest co
 ```
 .
 ...
-├── backend # Backend files are copied and used in test
-│   ├── Dockerfile # Contains the setup for backend image
+├── backend                           # Backend files are copied and used in test
+│   ├── Dockerfile                    # Contains the setup for backend image
 │   ├── contracts
 │   │   ├── OnlineSafetyGame.backup
 │   │   ├── OnlineSafetyGame.sol
 │   │   ├── PriceConverter.sol
-│   │   └── test # Contains extra files needed only for test
+│   │   └── test                      # Contains extra files needed only for test
 ...
-│   ├── gas-report.txt # Gives a gas report optimization during test build
-│   ├── hardhat.config.js # Config for hardhat setup
-│   ├── helper-hardhat-config.js # Helps me manipulate data for different chains
-│   ├── package.json # Contains all libraries and modules for build
-│   ├── scripts # Helps me run blockchain actions
+│   ├── gas-report.txt                # Gives a gas report optimization during test build
+│   ├── hardhat.config.js             # Config for hardhat setup
+│   ├── helper-hardhat-config.js      # Helps me manipulate data for different chains
+│   ├── package.json                  # Contains all libraries and modules for build
+│   ├── scripts                       # Helps me run blockchain actions
 │   │   ├── enterGame.js 
 │   │   └── mockOffchain.js
 ...
-│   ├── test # Here lies all my test script
+│   ├── test                          # Here lies all my test script
 │   │   ├── staging
 │   │   └── unit
 │   ├── utils
@@ -125,13 +152,13 @@ The `testing` branch is dedicated to testing purposes. It contains the latest co
 │   ├── yarn-error.log
 │   └── yarn.lock
 ...
-├── docker-compose.yaml # Here is the docker-compose config that creates container for backend and frontend separately
-├── frontend # frontend files are copied and used in test
-│   ├── Dockerfile # Contains the setup for frontend image
+├── docker-compose.yaml               # Here is the docker-compose config that creates container for backend and frontend separately
+├── frontend                          # frontend files are copied and used in test
+│   ├── Dockerfile                    # Contains the setup for frontend image
 ...
-│   ├── components # React components
+│   ├── components                    # React components
 ...
-│   ├── cypress # Cypress library to help me with frontend tests
+│   ├── cypress                       # Cypress library to help me with frontend tests
 │   │   ├── component
 │   │   ├── e2e
 │   │   ├── fixtures
@@ -139,7 +166,7 @@ The `testing` branch is dedicated to testing purposes. It contains the latest co
 │   │   └── support
 │   ├── cypress.config.js
 ...
-│   ├── package.json # Contains all libraries and modules for build
+│   ├── package.json                  # Contains all libraries and modules for build
 │   ├── pages
 ...
 │   ├── public
@@ -164,22 +191,22 @@ The `tf` branch is specifically used for Terraform configuration files and setup
 ```
 
 
-├── Dockerfile # was not used; ignore files I don't comment
+├── Dockerfile                      # was not used; ignore files I don't comment
 ...
-├── backend # was not used
+├── backend                         # was not used
 │   ├── contracts
 ...
-├── bunnyshell # Houses terraform files
+├── bunnyshell                      # Houses terraform files
 ...
-│   └── terraform # terraform files for Staging environment Setup
-│       ├── acceptance.sh # script for /bin/bash (bash aka bourne again shell)
-│       ├── acceptance2.sh # script for /bin/sh (sh aka lame ol' shell)
-│       ├── bunnyshell.yaml # Here is the config file for bunnyshell to setup your terraform
-│       ├── main.tf # terraform entry file
-│       ├── terraform.tfvars # This file was not used, variables where injected inline
-│       └── variables.tf # definition file
+│   └── terraform                   # terraform files for Staging environment Setup
+│       ├── acceptance.sh           # script for /bin/bash (bash aka bourne again shell)
+│       ├── acceptance2.sh          # script for /bin/sh (sh aka lame ol' shell)
+│       ├── bunnyshell.yaml         # Here is the config file for bunnyshell to setup your terraform
+│       ├── main.tf                 # terraform entry file
+│       ├── terraform.tfvars        # This file was not used, variables where injected inline
+│       └── variables.tf            # definition file
 ...
-├── frontend # we used the out\ static directory in frontend
+├── frontend                        # we used the out\ static directory in frontend
 │   ├── README.md
 ...
 │   ├── components
@@ -187,7 +214,7 @@ The `tf` branch is specifically used for Terraform configuration files and setup
 ...
 │   │   ├── contact-section-one.jsx
 ...
-│   ├── out # Contains static files we are pushing to AWS S3 for static content which is CDN distributed through cloudfront
+│   ├── out                         # Contains static files we are pushing to AWS S3 for static content which is CDN distributed through cloudfront
 ...
 
 ```
@@ -204,28 +231,28 @@ The `development` branch is intended for ongoing development work. It includes t
 2. Follow the instructions provided in the respective README files .
 3. Contribute to the development efforts by implementing new features or fixing bugs. Submit your changes via pull requests for review and merging into the `development` branch.
 
-# development
-```
+# Development
+``` md
 
 .
-├── Dockerfile # Contains the setup for combining fronend and backend as one image
+├── Dockerfile                          # Contains the setup for combining fronend and backend as one image
 ...
-├── backend # backend dir
+├── backend                             # backend dir
 │   ├── contracts
 ...
-├── docker-compose.yaml # docker-compose.yaml build image and exposes port 3000 for view
-├── frontend # frontend dir
+├── docker-compose.yaml                 # docker-compose.yaml build image and exposes port 3000 for view
+├── frontend                            # frontend dir
 ...
 │   ├── components
-│   │   ├── Chart.jsx # contains one of Tim's Creatives component ( hint it rhymes with kraph, giraffe)
+│   │   ├── Chart.jsx                   # contains one of `Tim's Creatives` component ( hint it rhymes with kraph, giraffe)
 ...
-│   │   ├── contact-section-one.jsx # also contains one of Tim's Creatives component
+│   │   ├── contact-section-one.jsx     # also contains one of `Tim's Creatives` component
 ...
 │   ├── data
-│   │   ├── PointsDb.js # makeshift db
+│   │   ├── PointsDb.js                 # makeshift db
 │   │   └── localDb.js
 ...
-│   ├── package.json # npm packages for build
+│   ├── package.json                    # npm packages for build
 │   ├── pages
 │   │   ├── _app.js
 │   │   ├── api
@@ -234,7 +261,7 @@ The `development` branch is intended for ongoing development work. It includes t
 │   ├── postcss.config.js
 │   ├── public
 ...
-│   │   ├── assets # development assets like audio, images
+│   │   ├── assets                      # development assets like audio, images
 ...
 ...
 │   ├── styles
