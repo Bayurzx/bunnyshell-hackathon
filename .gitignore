@@ -40,6 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+video.md
+read.md
 why.md
 steps.md
 .terraform.lock.hcl
