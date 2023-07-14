@@ -272,6 +272,12 @@ The `development` branch is intended for ongoing development work. It includes t
 ```
 
 
+---
+[![Architecture Diagram](./arch.png)](https://bayurzx.github.io/arch-static-gh_io/)
+
+## *Click on the image to interact*
+---
+
 ## Technical Summary:
 
 ### Overview:
