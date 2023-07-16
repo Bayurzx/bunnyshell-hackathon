@@ -85,15 +85,15 @@ export function Chart() {
 
   const [seriesVal, setSeriesVal] = useState([
     {
-      name: "Line 1",
+      name: "0x0000...0000",
       data: [100, 105, 110, 115, 110, 120, 125],
     },
     {
-      name: "Line 2",
+      name: "0x0000...0000",
       data: [70, 75, 80, 85, 82, 90, 92],
     },
     {
-      name: "Line 3",
+      name: "0x0000...0000",
       data: [50, 55, 60, 57, 70, 75, 72],
     },
   ])
@@ -121,7 +121,7 @@ export function Chart() {
     // setRadialVal([(first?.hasPlayed * 10), (second?.hasPlayed * 10), (third?.hasPlayed * 10)])
 
 
-    if (first) {
+    if (third?.score) {
       setSeriesVal([
         {
           name: addrSlice(first?.player),
@@ -138,10 +138,10 @@ export function Chart() {
       ])
     }
 
-  }, [first])
+  }, [third, first])
 
   useEffect(() => {
-    if (timeLeft) {
+    if (timeLeft && timeLeft > 0) {
       setRadialVal([100, parseInt((timeLeft / 259200) * 100)])
 
 
