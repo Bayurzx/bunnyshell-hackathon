@@ -121,7 +121,7 @@ export function Chart() {
     // setRadialVal([(first?.hasPlayed * 10), (second?.hasPlayed * 10), (third?.hasPlayed * 10)])
 
 
-    if (first) {
+    if (third?.score) {
       setSeriesVal([
         {
           name: addrSlice(first?.player),
@@ -138,10 +138,10 @@ export function Chart() {
       ])
     }
 
-  }, [first])
+  }, [third, first])
 
   useEffect(() => {
-    if (timeLeft) {
+    if (timeLeft && timeLeft > 0) {
       setRadialVal([100, parseInt((timeLeft / 259200) * 100)])
 
 
